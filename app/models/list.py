@@ -11,7 +11,7 @@ class List(db.Model):
     name = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now())
-    list_items = db.relationship('List Item', backref='list', lazy='dynamic')
+    list_items = db.relationship('ListItem', backref='list', lazy='dynamic')
 
     def __repr__(self):
         return u"<{class_name}(\
