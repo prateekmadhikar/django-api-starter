@@ -10,6 +10,10 @@ class ListItemService:
         list_item = ListItemModel(name=name,
                                   description=description if description else '',
                                   list_id=list_id)
+
+        db.session.add(list_item)
+        db.session.commit()
+
         return ListItem(list_item)
 
     def get_all_list_items_for_list(self, list_id):

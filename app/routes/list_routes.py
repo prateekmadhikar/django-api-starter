@@ -1,7 +1,7 @@
 import httplib
 import json
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 
 from app.services.list_service import ListService
 
@@ -33,7 +33,7 @@ def create_list():
                     mimetype='application/json')
 
 
-@list_blueprint.route('/{list_id}', methods=['GET'])
+@list_blueprint.route('/<int:list_id>', methods=['GET'])
 def get_list(list_id):
     list = list_service.get_list(list_id)
 
@@ -47,7 +47,7 @@ def get_list(list_id):
                     mimetype='application/json')
 
 
-@list_blueprint.route('/{list_id}', methods=['PUT'])
+@list_blueprint.route('/<int:list_id>', methods=['PUT'])
 def update_list(list_id):
     req_json = request.json
 
@@ -64,7 +64,7 @@ def update_list(list_id):
                     mimetype='application/json')
 
 
-@list_blueprint.route('/{list_id}', methods=['DELETE'])
+@list_blueprint.route('/<int:list_id>', methods=['DELETE'])
 def delete_list(list_id):
     is_deleted = list_service.delete_list(list_id)
 

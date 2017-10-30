@@ -51,7 +51,6 @@ class ListItem(BaseInterface):
     def list_id(self):
         return self._list_id
 
-
     def update(self, name=None, description=None, list_id=None):
         changes_made = False
 
@@ -70,13 +69,13 @@ class ListItem(BaseInterface):
         if changes_made:
             self._model._updated_at = datetime.now()
 
-            self = cls(self)
+            self = ListItem(self._model)
             db.session.commit()
 
         return self
 
     @classmethod
-    def for_id(id):
+    def for_id(cls, id):
         list_item = ListItemModel.query.filter_by(id=id).first()
 
         if list_item:

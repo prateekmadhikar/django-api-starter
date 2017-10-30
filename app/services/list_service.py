@@ -3,10 +3,15 @@ from app.exceptions import InvalidListIDException
 from app.models.list import List as ListModel
 from app.interfaces.list import List
 
+
 class ListService:
 
     def create_list(self, name):
         list = ListModel(name=name)
+
+        db.session.add(list)
+        db.session.commit()
+
         return List(list)
 
     def get_all_lists(self):
@@ -16,7 +21,7 @@ class ListService:
 
     def get_list(self, list_id):
         try:
-            return List.for_list_id(list_id)
+            return List.for_id(list_id)
         except InvalidListIDException:
             return None
 

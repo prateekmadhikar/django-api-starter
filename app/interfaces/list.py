@@ -48,13 +48,13 @@ class List(BaseInterface):
 
         if changes_made:
             self._model.updated_at = datetime.now()
-            self = cls(self)
+            self = List(self._model)
             db.session.commit()
 
         return self
 
     @classmethod
-    def for_id(id):
+    def for_id(cls, id):
         list = ListModel.query.filter_by(id=id).first()
 
         if list:
