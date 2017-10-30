@@ -5,7 +5,15 @@ from app.exceptions import InvalidListIDException
 from app.models.list import List as ListModel
 from .base import BaseInterface
 
+
 class List(BaseInterface):
+
+    FIELDS = (
+        'id',
+        'name',
+        'created_at',
+        'updated_at'
+    )
 
     def __init__(self, list):
         self._model = list
@@ -14,6 +22,22 @@ class List(BaseInterface):
         self._name = list.name
         self._created_at = list.created_at
         self._updated_at = list.updated_at
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def created_at(self):
+        return self._created_at
+
+    @property
+    def updated_at(self):
+        return self._updated_at
 
     def update(self, name=None):
         changes_made = False

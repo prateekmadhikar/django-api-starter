@@ -5,7 +5,17 @@ from app.exceptions import InvalidListItemIDException
 from app.models.list_item import ListItem as ListItemModel
 from .base import BaseInterface
 
+
 class ListItem(BaseInterface):
+
+    FIELDS = (
+        'id',
+        'name',
+        'description',
+        'created_at',
+        'updated_at',
+        'list_id',
+    )
 
     def __init__(self, list_item):
         self._model = list_item
@@ -16,6 +26,30 @@ class ListItem(BaseInterface):
         self._created_at = list_item.created_at
         self._updated_at = list_item.updated_at
         self._list_id = list_item.list_id
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def description(self):
+        return self._description
+
+    @property
+    def created_at(self):
+        return self._created_at
+
+    @property
+    def updated_at(self):
+        return self._updated_at
+
+    @property
+    def list_id(self):
+        return self._list_id
 
 
     def update(self, name=None, description=None, list_id=None):
