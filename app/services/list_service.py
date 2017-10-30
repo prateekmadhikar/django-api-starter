@@ -1,4 +1,5 @@
 from app import db
+from app.exceptions import InvalidListIDException
 from app.models.list import List as ListModel
 from app.interfaces.list import List
 
@@ -14,13 +15,22 @@ class ListService:
         return [List(l) for l in lists]
 
     def get_list(self, list_id):
-        return List.for_list_id(list_id)
+        try:
+            return List.for_list_id(list_id)
+        except InvalidListIDException:
+            return None
 
     def delete_list(self, list_id):
         list = self.get_list(list_id)
-        list.delete()
+
+        if list:
+            list.delete()
+            return True
+        return False
 
     def update_list(self, list_id, name=None):
         list = self.get_list(list_id)
 
-        return list.update(name=name)
+        if list:
+            return list.update(name=name)
+        return None
