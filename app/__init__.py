@@ -3,9 +3,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from config import DefaultConfig
-from .routes.list_routes import list_blueprint
-from .routes.list_item_routes import list_item_blueprint
-
 
 db = SQLAlchemy()
 
@@ -15,12 +12,18 @@ def create_app():
     app.config.from_object(DefaultConfig)
 
     db.init_app(app)
+
     migrate = Migrate(app, db)
 
+    # import models so that flask_migrate can see it
     from models.list_item import ListItem
     from models.list import List
 
+    # register all blueprints
+    from .routes.list_routes import list_blueprint
     app.register_blueprint(list_blueprint)
+
+    from .routes.list_item_routes import list_item_blueprint
     app.register_blueprint(list_item_blueprint)
 
 
