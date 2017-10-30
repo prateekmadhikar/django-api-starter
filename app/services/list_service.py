@@ -6,9 +6,7 @@ class ListService:
 
     def create_list(self, name):
         list = ListModel(name=name)
-        list = List(list)
-
-        return list
+        return List(list)
 
     def get_all_lists(self):
         lists = ListModel.query.all()
@@ -24,6 +22,5 @@ class ListService:
 
     def update_list(self, list_id, name=None):
         list = self.get_list(list_id)
-        list.update(name=name)
 
-        return list
+        return list.update(name=name)
