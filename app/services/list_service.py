@@ -1,23 +1,29 @@
 from app import db
 from app.models.list import List as ListModel
-
+from app.interfaces.list import List
 
 class ListService:
 
-    def __init__(self):
-        pass
-
     def create_list(self, name):
-        pass
+        list = ListModel(name=name)
+        list = List(list)
+
+        return list
 
     def get_all_lists(self):
-        pass
+        lists = ListModel.query.all()
+
+        return [List(l) for l in lists]
 
     def get_list(self, list_id):
-        pass
+        return List.for_list_id(list_id)
 
     def delete_list(self, list_id):
-        pass
+        list = self.get_list(list_id)
+        list.delete()
 
     def update_list(self, list_id, name=None):
-        pass
+        list = self.get_list(list_id)
+        list.update(name=name)
+
+        return list
