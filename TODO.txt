@@ -1,0 +1,5 @@
+- Exception handling at API level
+- Write readme with instructions on how to get things set up and running
+- Move config vars into environment vars
+- Write tests
+- Write more TODO's
