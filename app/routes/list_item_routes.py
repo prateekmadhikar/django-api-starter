@@ -79,9 +79,9 @@ def update_list_item(list_id, list_item_id):
 
     list = list_service.get_list(list_id)
 
-    if list:
-        return Response(response=json.dumps(list.to_json_serializable_dict()),
-                        status=httplib.OK,
+    if not list:
+        return Response(response=json.dumps({'error': 'invalid list_id'}),
+                        status=httplib.NOT_FOUND,
                         mimetype='application/json')
 
     list_item = list_item_service.update_list_item(list_item_id,
@@ -102,9 +102,9 @@ def update_list_item(list_id, list_item_id):
 def delete_list_item(list_id, list_item_id):
     list = list_service.get_list(list_id)
 
-    if list:
-        return Response(response=json.dumps(list.to_json_serializable_dict()),
-                        status=httplib.OK,
+    if not list:
+        return Response(response=json.dumps({'error': 'invalid list_id'}),
+                        status=httplib.NOT_FOUND,
                         mimetype='application/json')
 
     is_deleted = list_item_service.delete_list_item(list_item_id)
