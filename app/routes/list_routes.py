@@ -54,13 +54,13 @@ def update_list(list_id):
     list = list_service.update_list(list_id,
                                     name=req_json.get('name', None))
 
-    if list:
-        return Response(response=json.dumps(list.to_json_serializable_dict()),
-                        status=httplib.OK,
+    if not list:
+        return Response(response=json.dumps({'error': 'invalid list_id'}),
+                        status=httplib.NOT_FOUND,
                         mimetype='application/json')
 
-    return Response(response=json.dumps({'error': 'invalid list_id'}),
-                    status=httplib.NOT_FOUND,
+    return Response(response=json.dumps(list.to_json_serializable_dict()),
+                    status=httplib.OK,
                     mimetype='application/json')
 
 
@@ -68,10 +68,10 @@ def update_list(list_id):
 def delete_list(list_id):
     is_deleted = list_service.delete_list(list_id)
 
-    if is_deleted:
-        return Response(status=httplib.OK,
+    if not is_deleted:
+        return Response(response=json.dumps({'error': 'invalid list_id'}),
+                        status=httplib.NOT_FOUND,
                         mimetype='application/json')
 
-    return Response(response=json.dumps({'error': 'invalid list_id'}),
-                    status=httplib.NOT_FOUND,
+    return Response(status=httplib.OK,
                     mimetype='application/json')

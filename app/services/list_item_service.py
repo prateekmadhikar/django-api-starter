@@ -6,18 +6,18 @@ from app.interfaces.list_item import ListItem
 
 class ListItemService:
 
-    def create_list_item(self, list_id, name, description=None):
+    def create_list_item(self, list, name, description=None):
         list_item = ListItemModel(name=name,
                                   description=description if description else '',
-                                  list_id=list_id)
+                                  list_id=list.id)
 
         db.session.add(list_item)
         db.session.commit()
 
         return ListItem(list_item)
 
-    def get_all_list_items_for_list(self, list_id):
-        list_items = ListItemModel.query.filter_by(list_id=list_id).all()
+    def get_all_list_items_for_list(self, list):
+        list_items = ListItemModel.query.filter_by(list_id=list.id).all()
 
         return [ListItem(li) for li in list_items]
 
